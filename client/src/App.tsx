@@ -1,5 +1,12 @@
+import Layout from "./common/Layout";
+import Sidebar from "./components/Sidebar";
+
 function App() {
-  return <h1>Technical test Blossom</h1>;
+  return (
+    <Layout>
+      <Sidebar />
+    </Layout>
+  );
 }
 
 export default App;
