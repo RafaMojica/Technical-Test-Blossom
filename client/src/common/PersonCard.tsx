@@ -4,17 +4,29 @@ interface PersonCardProps {
   name: string;
   image: string;
   specie: string;
+  className?: string;
 }
 
-const PersonCard: FC<PersonCardProps> = ({ name, image, specie }) => {
+const PersonCard: FC<PersonCardProps> = ({
+  name,
+  image,
+  specie,
+  className,
+}) => {
   const [like, setLike] = useState(false);
 
   return (
-    <div className="group flex gap-4 py-4 px-5 items-center justify-center border-y rounded-lg cursor-pointer border-secondaryGrey focus:bg-primaryHover">
-      <img src={image} alt={name} />
-      <div>
-        <h3 className="font-bold">{name}</h3>
-        <h3 className="text-primaryGray">{specie}</h3>
+    <div
+      className={`group flex py-4 px-5 items-center justify-between border-t rounded-lg cursor-pointer border-secondaryGrey focus:bg-primaryHover ${
+        className || ""
+      }`}
+    >
+      <div className="flex justify-center items-center gap-4">
+        <img src={image} alt={name} />
+        <div>
+          <h3 className="font-bold">{name}</h3>
+          <h3 className="text-primaryGray">{specie}</h3>
+        </div>
       </div>
       <button
         onClick={() => setLike(!like)}
