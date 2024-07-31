@@ -25,7 +25,7 @@ const PersonCard: FC<PersonCardProps> = ({
         <img src={image} alt={name} />
         <div>
           <h3 className="font-bold">{name}</h3>
-          <h3 className="text-primaryGray">{specie}</h3>
+          <h3 className="text-primaryGrey">{specie}</h3>
         </div>
       </div>
       <button
