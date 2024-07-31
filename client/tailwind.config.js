@@ -2,13 +2,16 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    colors: {
-      primary100: "#EEE3FF",
-      primary600: "#8054C7",
-      primary700: "#5A3696",
-      secondary600: "#63D838",
+    extend: {
+      colors: {
+        primaryHover: "#EEE3FF",
+        primaryButton: "#8054C7",
+        secondaryButton: "#5A3696",
+        primaryGreen: "#63D838",
+        primaryGrey: "#6B7280",
+        secondaryGrey: "#E5E7EB",
+      },
     },
-    extend: {},
   },
   plugins: [],
 };
