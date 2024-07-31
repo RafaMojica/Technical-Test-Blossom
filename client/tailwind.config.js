@@ -10,6 +10,7 @@ export default {
         primaryGreen: "#63D838",
         primaryGrey: "#6B7280",
         secondaryGrey: "#E5E7EB",
+        tertiaryGrey: "#F3F4F6",
       },
     },
   },
