@@ -21,7 +21,7 @@ const PersonCard: FC<PersonCardProps> = ({
       }`}
     >
       <div className="flex justify-center items-center gap-4">
-        <img src={image} alt={name} />
+        <img src={image} alt={name} className="h-8 w-8 rounded-full" />
         <div>
           <h3 className="font-bold">{name}</h3>
           <h3 className="text-primaryGrey">{specie}</h3>
