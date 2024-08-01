@@ -12,11 +12,11 @@ const CharacterDetail = () => {
   });
 
   return (
-    <div className="flex flex-col gap-5 flex-grow">
+    <div className="hidden md:block md:flex-grow">
       {loading ? (
         <Loading />
       ) : (
-        <>
+        <div>
           <div className="relative flex flex-col gap-2">
             <img
               src={data?.character.image}
@@ -26,7 +26,7 @@ const CharacterDetail = () => {
             <ButtonLike className="absolute left-14 top-12" />
             <h2 className="font-bold text-2xl">{data?.character.name}</h2>
           </div>
-          <div>
+          <div className="pt-5">
             <PersonDescription
               title="Specie"
               description={data?.character.species}
@@ -37,7 +37,7 @@ const CharacterDetail = () => {
               className="border-y border-secondaryGrey"
             />
           </div>
-        </>
+        </div>
       )}
     </div>
   );

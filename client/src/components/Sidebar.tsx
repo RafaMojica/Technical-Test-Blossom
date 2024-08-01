@@ -27,7 +27,7 @@ const Sidebar = () => {
   const filteredData = filterData(sortedData, searchTerm);
 
   return (
-    <div>
+    <div className="flex flex-col flex-grow md:flex-grow-0 h-[calc(100vh-70px)]">
       <h1 className="text-2xl pb-4">
         <Link to="/">Rick and Morty list</Link>
       </h1>
@@ -36,7 +36,6 @@ const Sidebar = () => {
       <div className="mt-10 flex justify-between items-center text-primaryGrey">
         <h2 className="py-4 pl-4 font-medium">Starred Characters (0)</h2>
       </div>
-
       <div className="flex justify-between items-center text-primaryGrey">
         <h2 className="py-4 pl-4 font-medium">
           Characters {loading ? "(0)" : `(${sortedData.length})`}
@@ -48,7 +47,7 @@ const Sidebar = () => {
           <p>({isSorted ? "A-Z" : "Z-A"})</p>
         </button>
       </div>
-      <div>
+      <div className="md:overflow-y-scroll">
         {loading ? (
           <Loading />
         ) : (
