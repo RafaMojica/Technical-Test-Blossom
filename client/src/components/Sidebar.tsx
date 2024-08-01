@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PersonCard from "../common/PersonCard";
 import SearchBar from "../common/SearchBar";
 import { Link } from "react-router-dom";
@@ -11,6 +11,18 @@ const Sidebar = () => {
   const { data, loading } = useQuery<PersonData>(GET_PERSONS);
 
   const [isSorted, setIsSorted] = useState(true);
+  const [sortedData, setSortedData] = useState<
+    PersonData["characters"]["results"]
+  >([]);
+
+  useEffect(() => {
+    if (data) {
+      const sorted = [...data.characters.results].sort((a, b) =>
+        isSorted ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name)
+      );
+      setSortedData(sorted);
+    }
+  }, [data, isSorted]);
 
   return (
     <div>
@@ -25,7 +37,7 @@ const Sidebar = () => {
 
       <div className="flex justify-between items-center text-primaryGrey">
         <h2 className="py-4 pl-4 font-medium">
-          Characters {loading ? "(0)" : `(${data?.characters.results.length})`}
+          Characters {loading ? "(0)" : `(${sortedData.length})`}
         </h2>
         <button
           onClick={() => setIsSorted(!isSorted)}
@@ -37,7 +49,7 @@ const Sidebar = () => {
       {loading ? (
         <Loading />
       ) : (
-        data?.characters.results.map(({ id, name, image, species }) => (
+        sortedData.map(({ id, name, image, species }) => (
           <PersonCard key={id} name={name} image={image} specie={species} />
         ))
       )}
