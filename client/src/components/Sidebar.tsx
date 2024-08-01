@@ -1,19 +1,19 @@
 import { useEffect, useState } from "react";
 import PersonCard from "../common/PersonCard";
 import SearchBar from "../common/SearchBar";
+import Loading from "../common/Loading";
 import { Link } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { GET_PERSONS } from "../services/query/get-persons";
-import { PersonData } from "../types/person.types";
-import Loading from "../common/Loading";
+import { Person, PersonData } from "../types/person.types";
+import { filterData } from "../utils/filterData";
 
 const Sidebar = () => {
   const { data, loading } = useQuery<PersonData>(GET_PERSONS);
 
+  const [searchTerm, setSearchTerm] = useState("");
   const [isSorted, setIsSorted] = useState(true);
-  const [sortedData, setSortedData] = useState<
-    PersonData["characters"]["results"]
-  >([]);
+  const [sortedData, setSortedData] = useState<Person[]>([]);
 
   useEffect(() => {
     if (data) {
@@ -24,12 +24,14 @@ const Sidebar = () => {
     }
   }, [data, isSorted]);
 
+  const filteredData = filterData(sortedData, searchTerm);
+
   return (
     <div>
       <h1 className="text-2xl pb-4">
         <Link to="/">Rick and Morty list</Link>
       </h1>
-      <SearchBar />
+      <SearchBar onSearch={setSearchTerm} />
 
       <div className="mt-10 flex justify-between items-center text-primaryGrey">
         <h2 className="py-4 pl-4 font-medium">Starred Characters (0)</h2>
@@ -50,7 +52,7 @@ const Sidebar = () => {
         {loading ? (
           <Loading />
         ) : (
-          sortedData.map(({ id, name, image, species }) => (
+          filteredData.map(({ id, name, image, species }) => (
             <Link to={`/person/${id}`} key={id}>
               <PersonCard key={id} name={name} image={image} specie={species} />
             </Link>

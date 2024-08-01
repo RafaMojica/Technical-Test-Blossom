@@ -3,6 +3,8 @@ export interface Person {
   name: string;
   species: string;
   image: string;
+  gender: string;
+  status: string;
   like: boolean;
 }
 

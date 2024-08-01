@@ -2,9 +2,10 @@ import { FC } from "react";
 
 interface SearchBarProps {
   className?: string;
+  onSearch: (term: string) => void;
 }
 
-const SearchBar: FC<SearchBarProps> = ({ className }) => {
+const SearchBar: FC<SearchBarProps> = ({ className, onSearch }) => {
   return (
     <div
       className={`flex justify-between items-center py-1 px-5 bg-tertiaryGrey rounded-lg ${
@@ -17,6 +18,7 @@ const SearchBar: FC<SearchBarProps> = ({ className }) => {
           type="text"
           placeholder="Search or filter results"
           className="mx-2 placeholder:text-sm bg-tertiaryGrey placeholder-primaryGrey outline-none"
+          onChange={(event) => onSearch(event.target.value)}
         />
       </div>
       <button className="hover:bg-primaryHover rounded-lg p-2">

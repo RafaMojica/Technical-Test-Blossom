@@ -8,6 +8,8 @@ export const GET_PERSONS = gql`
         name
         species
         image
+        gender
+        status
       }
     }
   }
