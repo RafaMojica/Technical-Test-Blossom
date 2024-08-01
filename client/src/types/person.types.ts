@@ -1,7 +1,13 @@
 export interface Person {
   id: number;
   name: string;
-  specie: string;
+  species: string;
   image: string;
   like: boolean;
+}
+
+export interface PersonData {
+  characters: {
+    results: Person[];
+  };
 }
