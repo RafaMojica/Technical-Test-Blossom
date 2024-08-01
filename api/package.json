@@ -7,7 +7,7 @@
   "keywords": [],
   "main": "index.js",
   "scripts": {
-    "dev": "PORT=3000 nodemon --exec ts-node server.ts server.ts",
+    "dev": "PORT=3000 nodemon --exec ts-node server.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
