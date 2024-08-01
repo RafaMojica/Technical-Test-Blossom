@@ -27,7 +27,7 @@ const Sidebar = () => {
   const filteredData = filterData(sortedData, searchTerm);
 
   return (
-    <div className="flex flex-col flex-grow md:flex-grow-0 h-[calc(100vh-70px)]">
+    <div className="flex flex-col flex-grow md:flex-grow-0">
       <h1 className="text-2xl pb-4">
         <Link to="/">Rick and Morty list</Link>
       </h1>

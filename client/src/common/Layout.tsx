@@ -6,7 +6,9 @@ interface LayoutProps {
 }
 
 const Layout: FC<LayoutProps> = ({ children, className }) => {
-  return <div className={`p-8 flex ${className || ""}`}>{children}</div>;
+  return (
+    <div className={`p-8 flex h-screen ${className || ""}`}>{children}</div>
+  );
 };
 
 export default Layout;
