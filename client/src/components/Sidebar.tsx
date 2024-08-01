@@ -46,13 +46,17 @@ const Sidebar = () => {
           <p>({isSorted ? "A-Z" : "Z-A"})</p>
         </button>
       </div>
-      {loading ? (
-        <Loading />
-      ) : (
-        sortedData.map(({ id, name, image, species }) => (
-          <PersonCard key={id} name={name} image={image} specie={species} />
-        ))
-      )}
+      <div>
+        {loading ? (
+          <Loading />
+        ) : (
+          sortedData.map(({ id, name, image, species }) => (
+            <Link to={`/person/${id}`} key={id}>
+              <PersonCard key={id} name={name} image={image} specie={species} />
+            </Link>
+          ))
+        )}
+      </div>
     </div>
   );
 };
