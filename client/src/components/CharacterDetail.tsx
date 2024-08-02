@@ -19,21 +19,21 @@ const CharacterDetail = () => {
         <div>
           <div className="relative flex flex-col gap-2">
             <img
-              src={data?.character.image}
+              src={data?.GetDetailPerson.image}
               alt="Abadango Cluster Princess"
               className="h-20 w-20 rounded-full"
             />
             <ButtonLike className="absolute left-14 top-12" />
-            <h2 className="font-bold text-2xl">{data?.character.name}</h2>
+            <h2 className="font-bold text-2xl">{data?.GetDetailPerson.name}</h2>
           </div>
           <div className="pt-5">
             <PersonDescription
               title="Specie"
-              description={data?.character.species}
+              description={data?.GetDetailPerson.species}
             />
             <PersonDescription
               title="Status"
-              description={data?.character.status}
+              description={data?.GetDetailPerson.status}
               className="border-y border-secondaryGrey"
             />
           </div>

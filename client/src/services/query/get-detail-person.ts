@@ -2,7 +2,7 @@ import { gql } from "@apollo/client";
 
 export const GET_DETAIL_PERSON = gql`
   query GetDetailPerson($id: ID!) {
-    character(id: $id) {
+    GetDetailPerson(id: $id) {
       id
       name
       status
