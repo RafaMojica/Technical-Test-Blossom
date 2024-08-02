@@ -1,17 +1,16 @@
-import { ComponentPropsWithoutRef, FC, useState } from "react";
+import { ComponentPropsWithoutRef, FC } from "react";
 
 interface ButtonLikeProps extends ComponentPropsWithoutRef<"button"> {
+  like: boolean;
+  onClick: () => void;
   className?: string;
 }
 
-const ButtonLike: FC<ButtonLikeProps> = ({ className, ...buttonProps }) => {
-  const [like, setLike] = useState(false);
-
+const ButtonLike: FC<ButtonLikeProps> = ({ like, onClick, className }) => {
   return (
     <button
-      onClick={() => setLike(!like)}
+      onClick={onClick}
       className={`rounded-2xl p-1 bg-white ${className || ""}`}
-      {...buttonProps}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"

@@ -9,6 +9,7 @@ export const GET_PERSONS = gql`
       image
       gender
       status
+      like
     }
   }
 `;

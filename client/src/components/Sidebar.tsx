@@ -12,19 +12,35 @@ const Sidebar = () => {
   const { data, loading } = useQuery<PersonData>(GET_PERSONS);
 
   const [searchTerm, setSearchTerm] = useState("");
-  const [isSorted, setIsSorted] = useState(true);
+  const [isSortedPersons, setIsSortedPersons] = useState(true);
+  const [isSortedFavorite, setIsSortedFavorite] = useState(true);
   const [sortedData, setSortedData] = useState<Person[]>([]);
+  const [favoriteData, setFavoriteData] = useState<Person[]>([]);
 
   useEffect(() => {
     if (data) {
-      const sorted = [...data.GetPersons].sort((a, b) =>
-        isSorted ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name)
+      const favorite = data.GetPersons.filter((person) => person.like);
+      const dislike = data.GetPersons.filter((person) => !person.like);
+
+      const sortedPersons = [...dislike].sort((a, b) =>
+        isSortedPersons
+          ? a.name.localeCompare(b.name)
+          : b.name.localeCompare(a.name)
       );
-      setSortedData(sorted);
+
+      const sortedFavorite = [...favorite].sort((a, b) =>
+        isSortedFavorite
+          ? a.name.localeCompare(b.name)
+          : b.name.localeCompare(a.name)
+      );
+
+      setSortedData(sortedPersons);
+      setFavoriteData(sortedFavorite);
     }
-  }, [data, isSorted]);
+  }, [data, isSortedPersons, isSortedFavorite]);
 
   const filteredData = filterData(sortedData, searchTerm);
+  const filteredDataFavorite = filterData(favoriteData, searchTerm);
 
   return (
     <div className="flex flex-col flex-grow md:flex-grow-0">
@@ -34,26 +50,60 @@ const Sidebar = () => {
       <SearchBar onSearch={setSearchTerm} />
 
       <div className="mt-10 flex justify-between items-center text-primaryGrey">
-        <h2 className="py-4 pl-4 font-medium">Starred Characters (0)</h2>
+        <h2 className="py-4 pl-4 font-medium">
+          Starred Characters ({favoriteData.length})
+        </h2>
+        <button
+          onClick={() => setIsSortedFavorite(!isSortedFavorite)}
+          className="flex gap-1 hover:text-primaryButton font-medium"
+        >
+          <p>({isSortedFavorite ? "A-Z" : "Z-A"})</p>
+        </button>
       </div>
+      <div className="md:overflow-y-scroll mb-4">
+        {loading ? (
+          <Loading />
+        ) : (
+          filteredDataFavorite.map(({ id, name, image, species, like }) => (
+            <Link to={`/person/${id}`} key={id}>
+              <PersonCard
+                key={id}
+                id={id}
+                name={name}
+                image={image}
+                specie={species}
+                like={like}
+              />
+            </Link>
+          ))
+        )}
+      </div>
+
       <div className="flex justify-between items-center text-primaryGrey">
         <h2 className="py-4 pl-4 font-medium">
           Characters {loading ? "(0)" : `(${sortedData.length})`}
         </h2>
         <button
-          onClick={() => setIsSorted(!isSorted)}
+          onClick={() => setIsSortedPersons(!isSortedPersons)}
           className="flex gap-1 hover:text-primaryButton font-medium"
         >
-          <p>({isSorted ? "A-Z" : "Z-A"})</p>
+          <p>({isSortedPersons ? "A-Z" : "Z-A"})</p>
         </button>
       </div>
       <div className="md:overflow-y-scroll">
         {loading ? (
           <Loading />
         ) : (
-          filteredData.map(({ id, name, image, species }) => (
+          filteredData.map(({ id, name, image, species, like }) => (
             <Link to={`/person/${id}`} key={id}>
-              <PersonCard key={id} name={name} image={image} specie={species} />
+              <PersonCard
+                key={id}
+                id={id}
+                name={name}
+                image={image}
+                specie={species}
+                like={like}
+              />
             </Link>
           ))
         )}

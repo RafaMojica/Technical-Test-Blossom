@@ -8,6 +8,7 @@ export const GET_DETAIL_PERSON = gql`
       status
       species
       image
+      like
     }
   }
 `;
