@@ -1,5 +1,5 @@
 import { gql } from "apollo-server-express";
-import { PersonTypeDefs } from "./person";
+import { PersonResolvers, PersonTypeDefs } from "./person";
 import { SeedResolvers, SeedTypeDefs } from "./seed";
 
 const RootTypeDefs = gql`
@@ -12,5 +12,5 @@ const RootTypeDefs = gql`
   }
 `;
 
-export const resolvers = [SeedResolvers];
+export const resolvers = [SeedResolvers, PersonResolvers];
 export const typeDefs = [RootTypeDefs, PersonTypeDefs, SeedTypeDefs];
