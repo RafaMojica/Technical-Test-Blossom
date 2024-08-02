@@ -13,14 +13,14 @@ export const PersonTypeDefs = gql`
   }
 
   type Query {
-    allPersons: [Person!]
-    person(id: ID!): Person
+    GetPersons: [Person!]
+    GetDetailPerson(id: ID!): Person
   }
 `;
 
 export const PersonResolvers = {
   Query: {
-    allPersons: async () => {
+    GetPersons: async () => {
       try {
         const persons = await Persons.findAll();
         return persons;
@@ -29,7 +29,7 @@ export const PersonResolvers = {
         throw new Error(`Error getting persons`);
       }
     },
-    person: async (_: undefined, arg: { id: number }) => {
+    GetDetailPerson: async (_: undefined, arg: { id: number }) => {
       try {
         const persons = await Persons.findByPk(arg.id);
         return persons;
