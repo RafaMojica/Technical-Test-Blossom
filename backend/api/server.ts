@@ -4,12 +4,14 @@ import db from "./config/db";
 import models from "./models";
 import { ApolloServer } from "apollo-server-express";
 import { typeDefs, resolvers } from "./schema/schema";
+import { requestLogger } from "./middleware/requestLogger";
 
 models;
 const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(cors());
+app.use(requestLogger);
 
 async function startApolloServer() {
   const apolloServer = new ApolloServer({ typeDefs, resolvers });
