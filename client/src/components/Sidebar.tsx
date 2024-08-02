@@ -17,7 +17,7 @@ const Sidebar = () => {
 
   useEffect(() => {
     if (data) {
-      const sorted = [...data.characters.results].sort((a, b) =>
+      const sorted = [...data.GetPersons].sort((a, b) =>
         isSorted ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name)
       );
       setSortedData(sorted);

@@ -9,7 +9,5 @@ export interface Person {
 }
 
 export interface PersonData {
-  characters: {
-    results: Person[];
-  };
+  GetPersons: Person[];
 }
