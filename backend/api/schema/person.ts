@@ -14,6 +14,7 @@ export const PersonTypeDefs = gql`
 
   type Query {
     allPersons: [Person!]
+    person(id: ID!): Person
   }
 `;
 
@@ -22,6 +23,15 @@ export const PersonResolvers = {
     allPersons: async () => {
       try {
         const persons = await Persons.findAll();
+        return persons;
+      } catch (error) {
+        console.log(error);
+        throw new Error(`Error getting persons`);
+      }
+    },
+    person: async (_: undefined, arg: { id: number }) => {
+      try {
+        const persons = await Persons.findByPk(arg.id);
         return persons;
       } catch (error) {
         console.log(error);
