@@ -5,6 +5,7 @@ import models from "./models";
 import { ApolloServer } from "apollo-server-express";
 import { typeDefs, resolvers } from "./schema/schema";
 import { requestLogger } from "./middleware/requestLogger";
+import Persons from "./models";
 
 models;
 const app = express();
@@ -19,8 +20,18 @@ async function startApolloServer() {
   await apolloServer.start();
   apolloServer.applyMiddleware({ app });
 
-  db.sync({ force: false }).then(() => {
+  db.sync({ force: false }).then(async () => {
     console.log("DB Connected");
+
+    const count = await Persons.count();
+    if (count === 0) {
+      const { data } = await apolloServer.executeOperation({
+        query: `mutation { seedDatabase { name species image gender status like } }`,
+      });
+      console.log("Seed data:", data);
+      console.log("Database seeded");
+    }
+
     app.listen(port, () => {
       console.log(
         `Server on http://localhost:${port}${apolloServer.graphqlPath}`
