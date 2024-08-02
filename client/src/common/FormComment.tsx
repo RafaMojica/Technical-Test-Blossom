@@ -36,7 +36,6 @@ const FormComment: FC<FormCommentProps> = ({ personId, onCommentAdded }) => {
             onChange={(e) => setText(e.target.value)}
             placeholder="Write your comment here"
             required
-            readOnly
             className="w-full h-20"
           />
         </div>
