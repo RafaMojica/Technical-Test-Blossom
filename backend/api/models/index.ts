@@ -1,3 +1,7 @@
 import Persons from "./Person.model";
+import Comment from "./Comment.model";
 
-export default Persons;
+Persons.hasMany(Comment);
+Comment.belongsTo(Persons);
+
+export default { Persons, Comment };

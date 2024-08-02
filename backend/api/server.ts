@@ -5,7 +5,7 @@ import models from "./models";
 import { ApolloServer } from "apollo-server-express";
 import { typeDefs, resolvers } from "./schema/schema";
 import { requestLogger } from "./middleware/requestLogger";
-import Persons from "./models";
+import Persons from "./models/Person.model";
 import { updateCharacters } from "./utils/updateCharacters";
 import nodeCron from "node-cron";
 
