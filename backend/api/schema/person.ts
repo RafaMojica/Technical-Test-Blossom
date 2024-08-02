@@ -16,6 +16,10 @@ export const PersonTypeDefs = gql`
     GetPersons: [Person!]
     GetDetailPerson(id: ID!): Person
   }
+
+  type Mutation {
+    ToggleLike(id: ID!): Person
+  }
 `;
 
 export const PersonResolvers = {
@@ -34,6 +38,30 @@ export const PersonResolvers = {
         return persons;
       } catch (error) {
         throw new Error(`Error getting persons`);
+      }
+    },
+  },
+
+  Mutation: {
+    ToggleLike: async (_: undefined, args: { id: number }) => {
+      try {
+        const person = await Persons.findByPk(args.id);
+        if (!person) {
+          throw new Error(`Person with not found`);
+        }
+        const newLikeValue = !person.dataValues.like;
+
+        await Persons.update(
+          { like: newLikeValue },
+          {
+            where: { id: args.id },
+          }
+        );
+
+        const updatedPerson = await Persons.findByPk(args.id);
+        return updatedPerson;
+      } catch (error) {
+        throw new Error(`Error toggling like`);
       }
     },
   },
