@@ -6,6 +6,8 @@ import { ApolloServer } from "apollo-server-express";
 import { typeDefs, resolvers } from "./schema/schema";
 import { requestLogger } from "./middleware/requestLogger";
 import Persons from "./models";
+import { updateCharacters } from "./utils/updateCharacters";
+import nodeCron from "node-cron";
 
 models;
 const app = express();
@@ -36,6 +38,11 @@ async function startApolloServer() {
       console.log(
         `Server on http://localhost:${port}${apolloServer.graphqlPath}`
       );
+    });
+
+    nodeCron.schedule("0 */12 * * *", () => {
+      console.log("Running cron job to update characters");
+      updateCharacters();
     });
   });
 }
