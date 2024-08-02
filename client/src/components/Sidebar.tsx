@@ -44,7 +44,7 @@ const Sidebar = () => {
   const filteredDataFavorite = filterData(favoriteData, searchTerm);
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col md:h-[calc(100vh-50px)]">
       <h1 className="text-2xl pb-4">
         <Link to="/">Rick and Morty list</Link>
       </h1>
