@@ -11,6 +11,7 @@ import { filterData } from "../utils/filterData";
 const Sidebar = () => {
   const { data, loading } = useQuery<PersonData>(GET_PERSONS);
 
+  const [selectedId, setSelectedId] = useState<number | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [isSortedPersons, setIsSortedPersons] = useState(true);
   const [isSortedFavorite, setIsSortedFavorite] = useState(true);
@@ -60,12 +61,16 @@ const Sidebar = () => {
           <p>({isSortedFavorite ? "A-Z" : "Z-A"})</p>
         </button>
       </div>
-      <div className="md:overflow-y-scroll mb-4">
+      <div className="md:overflow-y-scroll h-max-[60px]">
         {loading ? (
           <Loading />
         ) : (
           filteredDataFavorite.map(({ id, name, image, species, like }) => (
-            <Link to={`/person/${id}`} key={id}>
+            <Link
+              to={`/person/${id}`}
+              key={id}
+              onClick={() => setSelectedId(id)}
+            >
               <PersonCard
                 key={id}
                 id={id}
@@ -73,6 +78,7 @@ const Sidebar = () => {
                 image={image}
                 specie={species}
                 like={like}
+                isSelected={selectedId === id}
               />
             </Link>
           ))
@@ -95,7 +101,11 @@ const Sidebar = () => {
           <Loading />
         ) : (
           filteredData.map(({ id, name, image, species, like }) => (
-            <Link to={`/person/${id}`} key={id}>
+            <Link
+              to={`/person/${id}`}
+              key={id}
+              onClick={() => setSelectedId(id)}
+            >
               <PersonCard
                 key={id}
                 id={id}
@@ -103,6 +113,7 @@ const Sidebar = () => {
                 image={image}
                 specie={species}
                 like={like}
+                isSelected={selectedId === id}
               />
             </Link>
           ))

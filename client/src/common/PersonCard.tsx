@@ -9,6 +9,7 @@ interface PersonCardProps {
   image: string;
   specie: string;
   like: boolean;
+  isSelected?: boolean;
   className?: string;
 }
 
@@ -18,6 +19,7 @@ const PersonCard: FC<PersonCardProps> = ({
   image,
   specie,
   like,
+  isSelected,
   className,
 }) => {
   const [liked, setLiked] = useState(like);
@@ -34,9 +36,9 @@ const PersonCard: FC<PersonCardProps> = ({
 
   return (
     <div
-      className={`flex py-4 px-5 items-center justify-between border-t rounded-lg cursor-pointer border-secondaryGrey focus:bg-primaryHover ${
-        className || ""
-      }`}
+      className={`flex py-4 px-5 items-center justify-between border-t rounded-lg cursor-pointer border-secondaryGrey ${
+        isSelected ? "bg-primaryHover" : ""
+      }  ${className || ""}`}
     >
       <div className="flex justify-center items-center gap-4">
         <img src={image} alt={name} className="h-8 w-8 rounded-full" />
