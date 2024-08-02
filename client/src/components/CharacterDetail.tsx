@@ -1,6 +1,6 @@
 import ButtonLike from "../common/ButtonLike";
 import PersonDescription from "../common/PersonDescription";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useMutation, useQuery } from "@apollo/client";
 import { GET_DETAIL_PERSON } from "../services/query/get-detail-person";
 import Loading from "../common/Loading";
@@ -27,6 +27,11 @@ const CharacterDetail = () => {
         <Loading />
       ) : (
         <div>
+          <div className="md:hidden pt-4 pb-6">
+            <Link to="/">
+              <img src="/icons/Question-mark-circle.svg" alt="arrow back" />
+            </Link>
+          </div>
           <div className="relative flex flex-col gap-2">
             <img
               src={data?.GetDetailPerson.image}
