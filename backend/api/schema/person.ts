@@ -25,16 +25,14 @@ export const PersonResolvers = {
         const persons = await Persons.findAll();
         return persons;
       } catch (error) {
-        console.log(error);
         throw new Error(`Error getting persons`);
       }
     },
-    GetDetailPerson: async (_: undefined, arg: { id: number }) => {
+    GetDetailPerson: async (_: undefined, args: { id: number }) => {
       try {
-        const persons = await Persons.findByPk(arg.id);
+        const persons = await Persons.findByPk(args.id);
         return persons;
       } catch (error) {
-        console.log(error);
         throw new Error(`Error getting persons`);
       }
     },
