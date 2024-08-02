@@ -50,39 +50,41 @@ const Sidebar = () => {
       </h1>
       <SearchBar onSearch={setSearchTerm} />
 
-      <div className="mt-10 flex justify-between items-center text-primaryGrey">
-        <h2 className="py-4 pl-4 font-medium">
-          Starred Characters ({favoriteData.length})
-        </h2>
-        <button
-          onClick={() => setIsSortedFavorite(!isSortedFavorite)}
-          className="flex gap-1 hover:text-primaryButton font-medium"
-        >
-          <p>({isSortedFavorite ? "A-Z" : "Z-A"})</p>
-        </button>
-      </div>
-      <div className="md:overflow-y-scroll h-max-[60px]">
-        {loading ? (
-          <Loading />
-        ) : (
-          filteredDataFavorite.map(({ id, name, image, species, like }) => (
-            <Link
-              to={`/person/${id}`}
-              key={id}
-              onClick={() => setSelectedId(id)}
-            >
-              <PersonCard
+      <div className="flex-1 flex flex-col md:max-h-[400px]">
+        <div className="mt-10 flex justify-between items-center text-primaryGrey">
+          <h2 className="py-4 pl-4 font-medium">
+            Starred Characters ({favoriteData.length})
+          </h2>
+          <button
+            onClick={() => setIsSortedFavorite(!isSortedFavorite)}
+            className="flex gap-1 hover:text-primaryButton font-medium"
+          >
+            <p>({isSortedFavorite ? "A-Z" : "Z-A"})</p>
+          </button>
+        </div>
+        <div className="md:overflow-y-scroll">
+          {loading ? (
+            <Loading />
+          ) : (
+            filteredDataFavorite.map(({ id, name, image, species, like }) => (
+              <Link
+                to={`/person/${id}`}
                 key={id}
-                id={id}
-                name={name}
-                image={image}
-                specie={species}
-                like={like}
-                isSelected={selectedId === id}
-              />
-            </Link>
-          ))
-        )}
+                onClick={() => setSelectedId(id)}
+              >
+                <PersonCard
+                  key={id}
+                  id={id}
+                  name={name}
+                  image={image}
+                  specie={species}
+                  like={like}
+                  isSelected={selectedId === id}
+                />
+              </Link>
+            ))
+          )}
+        </div>
       </div>
 
       <div className="flex justify-between items-center text-primaryGrey">
