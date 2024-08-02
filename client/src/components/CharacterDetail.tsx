@@ -22,7 +22,7 @@ const CharacterDetail = () => {
   };
 
   return (
-    <div className="hidden md:block md:flex-grow">
+    <div>
       {loading ? (
         <Loading />
       ) : (
