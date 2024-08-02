@@ -3,8 +3,7 @@ import cors from "cors";
 import db from "./config/db";
 import models from "./models";
 import { ApolloServer } from "apollo-server-express";
-import { typeDefs } from "./typeDefs";
-import { resolvers } from "./resolvers";
+import { typeDefs, resolvers } from "./schema/schema";
 
 models;
 const app = express();
