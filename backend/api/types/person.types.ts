@@ -7,3 +7,9 @@ export interface Person {
   status: string;
   like: boolean;
 }
+
+export interface FilterArgs {
+  species?: string;
+  gender?: string;
+  status?: string;
+}

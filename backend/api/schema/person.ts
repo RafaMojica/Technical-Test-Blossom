@@ -1,5 +1,6 @@
 import { gql } from "apollo-server-express";
 import Persons from "../models/Person.model";
+import { FilterArgs } from "../types/person.types";
 
 export const PersonTypeDefs = gql`
   type Person {
@@ -15,6 +16,7 @@ export const PersonTypeDefs = gql`
   type Query {
     GetPersons: [Person!]
     GetDetailPerson(id: ID!): Person
+    GetFilterPerson(species: String, gender: String, status: String): [Person!]
   }
 
   type Mutation {
@@ -38,6 +40,30 @@ export const PersonResolvers = {
         return persons;
       } catch (error) {
         throw new Error(`Error getting persons`);
+      }
+    },
+    GetFilterPerson: async (_: undefined, args: FilterArgs) => {
+      try {
+        const filters: Partial<FilterArgs> = {};
+        if (args.species) {
+          filters.species = args.species;
+        }
+        if (args.gender) {
+          filters.gender = args.gender;
+        }
+        if (args.status) {
+          filters.status = args.status;
+        }
+
+        const persons = await Persons.findAll({
+          where: {
+            ...filters,
+          },
+        });
+
+        return persons;
+      } catch (error) {
+        throw new Error(`Error getting filtered persons`);
       }
     },
   },
