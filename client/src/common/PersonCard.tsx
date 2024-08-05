@@ -25,7 +25,11 @@ const PersonCard: FC<PersonCardProps> = ({
   const [liked, setLiked] = useState(like);
   const [toggleLike] = useMutation(TOGGLE_LIKE);
 
-  const handleLikeToggle = async () => {
+  const handleLikeToggle = async (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    event.stopPropagation();
+    event.preventDefault();
     try {
       const { data } = await toggleLike({ variables: { id } });
       setLiked(data.ToggleLike.like);

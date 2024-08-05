@@ -2,7 +2,7 @@ import { ComponentPropsWithoutRef, FC } from "react";
 
 interface ButtonLikeProps extends ComponentPropsWithoutRef<"button"> {
   like: boolean;
-  onClick: () => void;
+  onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   className?: string;
 }
 
