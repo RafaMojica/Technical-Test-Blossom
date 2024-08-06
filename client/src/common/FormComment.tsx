@@ -1,6 +1,7 @@
 import React, { FC, useState } from "react";
 import { useMutation } from "@apollo/client";
 import { ADD_COMMENT } from "../services/mutations/add-comment";
+import Button from "./Button";
 
 interface FormCommentProps {
   personId: number;
@@ -40,13 +41,9 @@ const FormComment: FC<FormCommentProps> = ({ personId, onCommentAdded }) => {
           />
         </div>
         <div className="flex justify-end items-center ">
-          <button
-            type="submit"
-            disabled={loading}
-            className="border border-primaryHover hover:bg-primaryHover rounded-lg p-2"
-          >
+          <Button disabled={loading}>
             {loading ? "Adding Comment..." : "Add Comment"}
-          </button>
+          </Button>
         </div>
       </form>
       {message && <p style={{ color: "green" }}>{message}</p>}

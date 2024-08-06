@@ -2,15 +2,20 @@ import { ComponentPropsWithoutRef, FC } from "react";
 
 interface ButtonLikeProps extends ComponentPropsWithoutRef<"button"> {
   like: boolean;
-  onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   className?: string;
 }
 
-const ButtonLike: FC<ButtonLikeProps> = ({ like, onClick, className }) => {
+const ButtonLike: FC<ButtonLikeProps> = ({
+  like,
+  onClick,
+  className,
+  ...ButtonProps
+}) => {
   return (
     <button
       onClick={onClick}
       className={`rounded-2xl p-1 bg-white ${className || ""}`}
+      {...ButtonProps}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
