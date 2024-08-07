@@ -37,7 +37,7 @@ const FormComment: FC<FormCommentProps> = ({ personId, onCommentAdded }) => {
             onChange={(e) => setText(e.target.value)}
             placeholder="Write your comment here"
             required
-            className="w-full h-20"
+            className="w-full h-20 border border-secondaryGrey pl-2 rounded-md focus:border-primaryGrey focus:outline-none"
           />
         </div>
         <div className="flex justify-end items-center ">
