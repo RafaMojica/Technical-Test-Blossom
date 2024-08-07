@@ -18,7 +18,7 @@ const Button: FC<ButtonProps> = ({
     <button
       type={type || "submit"}
       disabled={disabled || loading}
-      className={`border border-secondaryGrey hover:bg-primaryHover rounded-lg py-3 px-2 font-medium text-sm ${
+      className={`flex-1 border border-secondaryGrey hover:bg-primaryHover rounded-lg py-2 px-2 font-medium text-sm ${
         className || ""
       }`}
       {...ButtonProps}
