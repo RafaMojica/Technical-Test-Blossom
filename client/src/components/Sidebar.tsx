@@ -7,10 +7,12 @@ import { useQuery } from "@apollo/client";
 import { GET_PERSONS } from "../services/query/get-persons";
 import { Person, PersonData } from "../types/person.types";
 import { filterData } from "../utils/filterData";
+import FilterPanel from "./FilterPanel";
 
 const Sidebar = () => {
   const { data, loading } = useQuery<PersonData>(GET_PERSONS);
 
+  const [isFilterPanelVisible, setIsFilterPanelVisible] = useState(false);
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [isSortedPersons, setIsSortedPersons] = useState(true);
@@ -44,12 +46,18 @@ const Sidebar = () => {
   const filteredDataFavorite = filterData(favoriteData, searchTerm);
 
   return (
-    <div className="flex flex-col md:h-[calc(100vh-50px)]">
+    <div className="relative flex flex-col md:h-[calc(100vh-50px)]">
       <h1 className="text-2xl pb-4">
         <Link to="/">Rick and Morty list</Link>
       </h1>
-      <SearchBar onSearch={setSearchTerm} />
-
+      <div className="flex flex-col gap-2">
+        <SearchBar
+          onSearch={setSearchTerm}
+          setIsFilterPanelVisible={setIsFilterPanelVisible}
+          isFilterPanelVisible={isFilterPanelVisible}
+        />
+        {isFilterPanelVisible && <FilterPanel />}
+      </div>
       <div className="flex-1 flex flex-col md:max-h-[400px]">
         <div className="mt-10 flex justify-between items-center text-primaryGrey">
           <h2 className="py-4 pl-4 font-medium">
