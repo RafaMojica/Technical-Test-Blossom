@@ -31,7 +31,9 @@ const SearchBar: FC<SearchBarProps> = ({
         </div>
         <button
           onClick={() => setIsFilterPanelVisible(!isFilterPanelVisible)}
-          className="hover:bg-primaryHover rounded-lg p-2"
+          className={`hover:bg-primaryHover rounded-lg p-2 ${
+            isFilterPanelVisible && "bg-primaryHover"
+          }`}
         >
           <img src="/icons/Adjustments.svg" alt="Adjustments" />
         </button>

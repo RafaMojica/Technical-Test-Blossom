@@ -41,7 +41,7 @@ const PersonCard: FC<PersonCardProps> = ({
   return (
     <div
       className={`flex py-4 px-5 items-center justify-between border-t rounded-lg cursor-pointer border-secondaryGrey ${
-        isSelected ? "bg-primaryHover" : ""
+        isSelected && "bg-primaryHover"
       }  ${className || ""}`}
     >
       <div className="flex justify-center items-center gap-4">
