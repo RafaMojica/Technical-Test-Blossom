@@ -19,7 +19,7 @@ const FilterPanel = () => {
           <Button>Alien</Button>
         </div>
       </div>
-      <Button className="w-full">filter</Button>
+      <Button className="w-full">Filter</Button>
     </div>
   );
 };
