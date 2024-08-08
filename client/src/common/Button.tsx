@@ -3,12 +3,14 @@ import { ComponentPropsWithoutRef, FC } from "react";
 interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
   children: string;
   loading?: boolean;
+  isSelected?: boolean;
   className?: string;
 }
 
 const Button: FC<ButtonProps> = ({
   children,
   loading,
+  isSelected,
   disabled,
   type,
   className,
@@ -18,9 +20,9 @@ const Button: FC<ButtonProps> = ({
     <button
       type={type || "submit"}
       disabled={disabled || loading}
-      className={`flex-1 border border-secondaryGrey hover:bg-primaryHover rounded-lg py-2 px-2 font-medium text-sm ${
-        className || ""
-      }`}
+      className={`flex-1 border border-secondaryGrey rounded-lg py-2 px-2 font-medium text-sm ${
+        isSelected && "bg-primaryHover text-primaryButton"
+      } ${className || ""}`}
       {...ButtonProps}
     >
       {children}

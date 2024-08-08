@@ -41,7 +41,10 @@ const FormComment: FC<FormCommentProps> = ({ personId, onCommentAdded }) => {
           />
         </div>
         <div className="flex justify-end items-center ">
-          <Button disabled={loading} className="flex-none">
+          <Button
+            disabled={loading}
+            className="flex-none hover:bg-primaryHover hover:border-primaryHover"
+          >
             {loading ? "Adding Comment..." : "Add Comment"}
           </Button>
         </div>
