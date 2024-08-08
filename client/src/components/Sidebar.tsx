@@ -58,17 +58,19 @@ const Sidebar = () => {
         />
         {isFilterPanelVisible && <FilterPanel />}
       </div>
-      <div className="flex-1 flex flex-col md:max-h-[400px]">
-        <div className="mt-10 flex justify-between items-center text-primaryGrey">
-          <h2 className="py-4 pl-4 font-medium">
-            Starred Characters ({favoriteData.length})
-          </h2>
+      <div className="mt-10 flex-1 flex flex-col md:max-h-[400px]">
+        <div className="flex justify-between items-center p-4 text-primaryGrey font-medium">
+          <h2>Starred Characters ({favoriteData.length})</h2>
           <button
             onClick={() => setIsSortedFavorite(!isSortedFavorite)}
-            className="flex gap-1 hover:text-primaryButton font-medium"
+            className="flex hover:text-primaryButton"
           >
             <p>({isSortedFavorite ? "A-Z" : "Z-A"})</p>
           </button>
+          {/* <p className="text-primaryBlue">5 Results</p>
+          <span className="bg-primaryGreen/20 text-secondaryGreen text-xs px-3 py-0.5 rounded-full">
+            1 Filter
+          </span> */}
         </div>
         <div className="md:overflow-y-scroll">
           {loading ? (
@@ -95,13 +97,11 @@ const Sidebar = () => {
         </div>
       </div>
 
-      <div className="flex justify-between items-center text-primaryGrey">
-        <h2 className="py-4 pl-4 font-medium">
-          Characters {loading ? "(0)" : `(${sortedData.length})`}
-        </h2>
+      <div className="flex justify-between items-center p-4 text-primaryGrey font-medium">
+        <h2>Characters {loading ? "(0)" : `(${sortedData.length})`}</h2>
         <button
           onClick={() => setIsSortedPersons(!isSortedPersons)}
-          className="flex gap-1 hover:text-primaryButton font-medium"
+          className="flex hover:text-primaryButton font-medium"
         >
           <p>({isSortedPersons ? "A-Z" : "Z-A"})</p>
         </button>
