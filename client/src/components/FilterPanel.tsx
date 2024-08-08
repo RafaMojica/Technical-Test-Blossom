@@ -44,7 +44,7 @@ const FilterPanel = () => {
         className={`w-full ${
           !isFilterButtonDisabled
             ? "bg-primaryButton text-white"
-            : "bg-tertiaryGrey text-primaryGrey border-none"
+            : "bg-tertiaryGrey text-primaryGrey border-tertiaryGrey"
         }`}
         disabled={isFilterButtonDisabled}
       >
