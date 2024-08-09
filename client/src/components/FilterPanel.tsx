@@ -3,12 +3,11 @@ import Button from "../common/Button";
 import { FILTER } from "../constants/filter";
 
 const FilterPanel = () => {
-  const [selectedCharacter, setSelectedCharacter] = useState<string | null>(
-    null
-  );
-  const [selectedSpecie, setSelectedSpecie] = useState<string | null>(null);
+  const [selectedCharacter, setSelectedCharacter] = useState<string>("All");
+  const [selectedSpecie, setSelectedSpecie] = useState<string>("All");
 
-  const isFilterButtonDisabled = !selectedCharacter && !selectedSpecie;
+  const isFilterButtonDisabled =
+    selectedCharacter === "All" && selectedSpecie === "All";
 
   return (
     <div className="flex flex-col gap-6 p-6 bg-white absolute top-28 left-0 right-0 z-10 shadow-xl rounded-xl">
