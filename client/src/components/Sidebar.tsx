@@ -1,35 +1,49 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import PersonCard from "../common/PersonCard";
 import SearchBar from "../common/SearchBar";
 import Loading from "../common/Loading";
 import { Link } from "react-router-dom";
-import { useLazyQuery, useQuery } from "@apollo/client";
-import { GET_PERSONS } from "../services/query/get-persons";
-import { Person, PersonData } from "../types/person.types";
+import { useLazyQuery } from "@apollo/client";
+import { Person } from "../types/person.types";
 import FilterPanel from "./FilterPanel";
 import { GET_FILTER_PERSON } from "../services/query/get-filter-person";
 
 const Sidebar = () => {
-  const { data, loading } = useQuery<PersonData>(GET_PERSONS);
-  const [getFilteredPerson, { data: dataFilter }] =
+  const [getFilteredPerson, { data, loading }] =
     useLazyQuery(GET_FILTER_PERSON);
 
   const [isFilterPanelVisible, setIsFilterPanelVisible] = useState(false);
-  const [selectedId, setSelectedId] = useState<number | null>(null);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [isSortedPersons, setIsSortedPersons] = useState(true);
-  const [isSortedFavorite, setIsSortedFavorite] = useState(true);
-  const [allData, setAllData] = useState<Person[]>([]);
-  const [favoriteData, setFavoriteData] = useState<Person[]>([]);
-  const [filterCount, setFilterCount] = useState(0);
   const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
   const [selectedSpecie, setSelectedSpecie] = useState<string | null>(null);
   const [selectedGender, setSelectedGender] = useState<string | null>(null);
+  const [filterCount, setFilterCount] = useState(0);
+
+  const [isSortedPersons, setIsSortedPersons] = useState(true);
+  const [isSortedFavorite, setIsSortedFavorite] = useState(true);
+
+  const [allData, setAllData] = useState<Person[]>([]);
+  const [favoriteData, setFavoriteData] = useState<Person[]>([]);
+  const [selectedId, setSelectedId] = useState<number | null>(null);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const filterMenu = !selectedStatus && !selectedSpecie && !selectedGender;
+
+  const fetchFilteredPerson = useCallback(() => {
+    getFilteredPerson();
+  }, [getFilteredPerson]);
 
   useEffect(() => {
-    const updateData = (persons: Person[]) => {
-      const favorite = persons.filter((person) => person.like);
-      const dislike = persons.filter((person) => !person.like);
+    fetchFilteredPerson();
+  }, [fetchFilteredPerson]);
+
+  useEffect(() => {
+    if (data) {
+      const favorite = data.GetFilterPerson.filter(
+        (person: Person) => person.like
+      );
+      const dislike = data.GetFilterPerson.filter(
+        (person: Person) => !person.like
+      );
 
       const sortedPersons = [...dislike].sort((a, b) =>
         isSortedPersons
@@ -45,14 +59,8 @@ const Sidebar = () => {
 
       setAllData(sortedPersons);
       setFavoriteData(sortedFavorite);
-    };
-
-    if (dataFilter) {
-      updateData(dataFilter.GetFilterPerson);
-    } else if (data) {
-      updateData(data.GetPersons);
     }
-  }, [data, dataFilter, isSortedPersons, isSortedFavorite]);
+  }, [data, isSortedPersons, isSortedFavorite]);
 
   useEffect(() => {
     const countFilters = () => {
@@ -100,16 +108,7 @@ const Sidebar = () => {
         />
         <div className="mt-10 flex-1 flex flex-col md:max-h-[400px]">
           <div className="flex justify-between items-center p-4 text-primaryGrey font-medium">
-            {dataFilter ? (
-              <>
-                <p className="text-primaryBlue">
-                  {favoriteData.length + allData.length} Results
-                </p>
-                <span className="bg-primaryGreen/20 text-secondaryGreen text-xs px-3 py-0.5 rounded-full">
-                  {filterCount} {filterCount === 1 ? "Filter" : "Filters"}
-                </span>
-              </>
-            ) : (
+            {filterMenu ? (
               <>
                 <h2>Starred Characters ({favoriteData.length})</h2>
                 <button
@@ -118,6 +117,15 @@ const Sidebar = () => {
                 >
                   <p>({isSortedFavorite ? "A-Z" : "Z-A"})</p>
                 </button>
+              </>
+            ) : (
+              <>
+                <p className="text-primaryBlue">
+                  {favoriteData.length + allData.length} Results
+                </p>
+                <span className="bg-primaryGreen/20 text-secondaryGreen text-xs px-3 py-0.5 rounded-full">
+                  {filterCount} {filterCount === 1 ? "Filter" : "Filters"}
+                </span>
               </>
             )}
           </div>
@@ -146,10 +154,10 @@ const Sidebar = () => {
           </div>
         </div>
         <div className="flex justify-between items-center p-4 text-primaryGrey font-medium">
-          <h2>Characters {loading ? "(0)" : `(${allData.length})`}</h2>
+          <h2>Characters ({allData.length})</h2>
           <button
             onClick={() => setIsSortedPersons(!isSortedPersons)}
-            className="flex hover:text-primaryButton font-medium"
+            className="flex hover:text-primaryButton"
           >
             <p>({isSortedPersons ? "A-Z" : "Z-A"})</p>
           </button>
