@@ -1,22 +1,42 @@
-import { FC, useState } from "react";
+import { Dispatch, FC, SetStateAction } from "react";
 import Button from "../common/Button";
 import { FILTER } from "../constants/filter";
+import { FilterParams } from "../types/filter.type";
+import CharacterFilter from "../common/CharacterFilter";
 
 interface FilterPanelProps {
   isFilterPanelVisible: boolean;
   setIsFilterPanelVisible: (isVisible: boolean) => void;
+  getFilteredPerson: (params: FilterParams) => void;
+  selectedStatus: string | null;
+  selectedSpecie: string | null;
+  selectedGender: string | null;
+  setSelectedStatus: Dispatch<SetStateAction<string | null>>;
+  setSelectedSpecie: Dispatch<SetStateAction<string | null>>;
+  setSelectedGender: Dispatch<SetStateAction<string | null>>;
 }
 
 const FilterPanel: FC<FilterPanelProps> = ({
   isFilterPanelVisible,
   setIsFilterPanelVisible,
+  getFilteredPerson,
+  selectedStatus,
+  selectedSpecie,
+  selectedGender,
+  setSelectedStatus,
+  setSelectedSpecie,
+  setSelectedGender,
 }) => {
-  const [selectedCharacter, setSelectedCharacter] = useState<string | null>(
-    null
-  );
-  const [selectedSpecie, setSelectedSpecie] = useState<string | null>(null);
-
-  const isFilterButtonDisabled = !selectedCharacter && !selectedSpecie;
+  const handleFilterClick = () => {
+    getFilteredPerson({
+      variables: {
+        species: selectedSpecie,
+        gender: selectedGender,
+        status: selectedStatus,
+      },
+    });
+    setIsFilterPanelVisible(false);
+  };
 
   return (
     <div
@@ -33,43 +53,28 @@ const FilterPanel: FC<FilterPanelProps> = ({
         </button>
         <h3 className="m-auto font-medium">Filter</h3>
       </div>
-
-      <div className="flex flex-col gap-2">
-        <h3 className="text-primaryGrey font-medium">Character</h3>
-        <div className="flex items-center justify-between gap-2">
-          {FILTER.CHARACTER_OPTIONS.map((option) => (
-            <Button
-              key={option}
-              isSelected={selectedCharacter === option}
-              onClick={() => setSelectedCharacter(option)}
-            >
-              {option}
-            </Button>
-          ))}
-        </div>
-      </div>
-      <div className="flex flex-col gap-2">
-        <h3 className="text-primaryGrey font-medium">Specie</h3>
-        <div className="flex items-center justify-between gap-2">
-          {FILTER.SPECIE_OPTIONS.map((option) => (
-            <Button
-              key={option}
-              isSelected={selectedSpecie === option}
-              onClick={() => setSelectedSpecie(option)}
-            >
-              {option}
-            </Button>
-          ))}
-        </div>
-      </div>
+      <CharacterFilter
+        title="Specie"
+        options={FILTER.SPECIE_OPTIONS}
+        selected={selectedSpecie}
+        setSelected={setSelectedSpecie}
+      />
+      <CharacterFilter
+        title="Gender"
+        options={FILTER.GENDER_OPTIONS}
+        selected={selectedGender}
+        setSelected={setSelectedGender}
+      />
+      <CharacterFilter
+        title="Status"
+        options={FILTER.STATUS_OPTIONS}
+        selected={selectedStatus}
+        setSelected={setSelectedStatus}
+      />
       <div className="mt-auto">
         <Button
-          className={`w-full ${
-            !isFilterButtonDisabled
-              ? "bg-primaryButton text-white"
-              : "bg-tertiaryGrey text-primaryGrey border-tertiaryGrey"
-          }`}
-          disabled={isFilterButtonDisabled}
+          onClick={handleFilterClick}
+          className={`w-full  bg-primaryButton text-white }`}
         >
           Filter
         </Button>
